@@ -58,6 +58,11 @@ const askGuess = () => {
 const askMin = (max) => {
     rl.question("Enter a min number: \n", (min) => {
         if(isNum(min)) {
+            if(max < min){
+                let temp = max
+                max = min
+                min = temp
+            }
             console.log(`I'm thinking of a number between ${min} and ${max}...`)
             secretNum = randomInRange(min, max)
             askGuess()
