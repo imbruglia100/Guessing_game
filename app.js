@@ -14,8 +14,8 @@ const isNum = maybeNum => {
     return Number.isInteger(Math.floor(maybeNum))
 }
 
-const playAgain = () => {
-    rl.question("You lose! \n Want to play again? \n", (input) => {
+const playAgain = (winStatus) => {
+    rl.question(`${winStatus} \n The Number was ${secretNum} \n Want to play again? \n`, (input) => {
         if(['n', 'N', 'No', "NO"].includes(input)){
             rl.close()
         }else{
@@ -39,13 +39,13 @@ const checkGuess = (input) => {
 
 const askGuess = () => {
     if(numAttempts === 0){
-        playAgain()
+        playAgain("You lose!")
     }
     numAttempts--
     rl.question("Enter a guess \n", (input) => {
         if(isNum(input)) {
             if(checkGuess(Math.floor(input))) {
-                playAgain()
+                playAgain("You Win!")
             }
             askGuess()
         }else{
@@ -58,7 +58,7 @@ const askGuess = () => {
 const askMin = (max) => {
     rl.question("Enter a min number: \n", (min) => {
         if(isNum(min)) {
-            if(max < min){
+            if(Math.floor(max) < Math.floor(min)){
                 let temp = max
                 max = min
                 min = temp
